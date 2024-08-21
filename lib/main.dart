@@ -12,6 +12,7 @@ import 'package:test_flutter/l10n/app_localizations.dart';
 import 'package:test_flutter/pages/locale_provider.dart'; // Import your locale provider
 import 'package:test_flutter/pages/language_selection_page.dart'; // Import your locale provider
 
+//simple comment
 
 void main() {
   runApp(
