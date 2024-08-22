@@ -51,40 +51,40 @@ class S {
   }
 
   /// `New`
-  String get New {
+  String get newGame {
     return Intl.message(
       'New',
-      name: 'New',
+      name: 'newGame',
       desc: '',
       args: [],
     );
   }
 
   /// `Save`
-  String get Save {
+  String get save {
     return Intl.message(
       'Save',
-      name: 'Save',
+      name: 'save',
       desc: '',
       args: [],
     );
   }
 
   /// `Help`
-  String get Help {
+  String get help {
     return Intl.message(
       'Help',
-      name: 'Help',
+      name: 'help',
       desc: '',
       args: [],
     );
   }
 
   /// `About`
-  String get About {
+  String get about {
     return Intl.message(
       'About',
-      name: 'About',
+      name: 'about',
       desc: '',
       args: [],
     );
@@ -235,6 +235,36 @@ class S {
     return Intl.message(
       'Player 4',
       name: 'player4',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter valid score.`
+  String get pleaseEnterValidScore {
+    return Intl.message(
+      'Please enter valid score.',
+      name: 'pleaseEnterValidScore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The total of both scores must be 100.`
+  String get totalScoreMustBe100 {
+    return Intl.message(
+      'The total of both scores must be 100.',
+      name: 'totalScoreMustBe100',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `App Version: `
+  String get appVersion {
+    return Intl.message(
+      'App Version: ',
+      name: 'appVersion',
       desc: '',
       args: [],
     );

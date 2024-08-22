@@ -22,18 +22,21 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "About": MessageLookupByLibrary.simpleMessage("Σχετικά"),
-        "Help": MessageLookupByLibrary.simpleMessage("Βοήθεια"),
         "Language": MessageLookupByLibrary.simpleMessage("Γλώσσα"),
-        "New": MessageLookupByLibrary.simpleMessage("Νέο"),
-        "Save": MessageLookupByLibrary.simpleMessage("Αποθήκευση"),
         "SubmitScore": MessageLookupByLibrary.simpleMessage("Καταχώρηση"),
+        "about": MessageLookupByLibrary.simpleMessage("Σχετικά"),
+        "appVersion": MessageLookupByLibrary.simpleMessage("Έκδοση: "),
         "english": MessageLookupByLibrary.simpleMessage("Αγγλικά"),
         "greek": MessageLookupByLibrary.simpleMessage("Ελληνικά"),
+        "help": MessageLookupByLibrary.simpleMessage("Βοήθεια"),
+        "newGame": MessageLookupByLibrary.simpleMessage("Νέο"),
         "player1": MessageLookupByLibrary.simpleMessage("Παίκτης 1"),
         "player2": MessageLookupByLibrary.simpleMessage("Παίκτης 2"),
         "player3": MessageLookupByLibrary.simpleMessage("Παίκτης 3"),
         "player4": MessageLookupByLibrary.simpleMessage("Παίκτης 4"),
+        "pleaseEnterValidScore": MessageLookupByLibrary.simpleMessage(
+            "Παρακαλώ εισάγετε έγκυρο σκορ."),
+        "save": MessageLookupByLibrary.simpleMessage("Αποθήκευση"),
         "selectLanguage":
             MessageLookupByLibrary.simpleMessage("Επιλέξτε Γλώσσα"),
         "submit": MessageLookupByLibrary.simpleMessage("Υποβολή"),
@@ -41,6 +44,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "team1Score": MessageLookupByLibrary.simpleMessage("Σκορ Ομάδας 1"),
         "team2": MessageLookupByLibrary.simpleMessage("Ομάδα 2"),
         "team2Score": MessageLookupByLibrary.simpleMessage("Σκορ Ομάδας 2"),
-        "totalScore": MessageLookupByLibrary.simpleMessage("Συνολικό Σκορ")
+        "totalScore": MessageLookupByLibrary.simpleMessage("Συνολικό Σκορ"),
+        "totalScoreMustBe100": MessageLookupByLibrary.simpleMessage(
+            "Το άθροισμα των πόντων πρέπει να είναι 100.")
       };
 }

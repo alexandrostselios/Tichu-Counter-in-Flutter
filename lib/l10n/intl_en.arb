@@ -1,9 +1,9 @@
 {
     "@@locale": "en",
-    "New": "New",
-    "Save": "Save",
-    "Help": "Help",
-    "About": "About",
+    "newGame": "New",
+    "save": "Save",
+    "help": "Help",
+    "about": "About",
     "Language": "Language",
     "SubmitScore": "Submit Score",
     "selectLanguage": "Select Language",
@@ -18,5 +18,8 @@
     "player1": "Player 1",
     "player2": "Player 2",
     "player3": "Player 3",
-    "player4": "Player 4"
+    "player4": "Player 4",
+    "pleaseEnterValidScore": "Please enter valid score.",
+    "totalScoreMustBe100": "The total of both scores must be 100.",
+    "appVersion": "App Version: "
 }

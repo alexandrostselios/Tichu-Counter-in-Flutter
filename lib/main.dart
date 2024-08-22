@@ -73,6 +73,10 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _team2Tichu2 = false;
   bool _team2GrandTichu1 = false;
   bool _team2GrandTichu2 = false;
+  bool _team1TichuOrGrandTichuWon1 = false;
+  bool _team1TichuOrGrandTichuWon2 = false;
+  bool _team2TichuOrGrandTichuWon1 = false;
+  bool _team2TichuOrGrandTichuWon2 = false;
 
   final TextEditingController _team1Controller = TextEditingController();
   final TextEditingController _team2Controller = TextEditingController();
@@ -115,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final team1Score = int.tryParse(_team1Controller.text.trim());
     final team2Score = int.tryParse(_team2Controller.text.trim());
 
-    if (team1Score != null && team1Score! >= -25 && team1Score! <= 125 && team1Score % 5 == 0){
+    if (team1Score != null && team1Score! >= -25 && team1Score! <= 125 && team1Score % 5 == 0 && (team1Score + team2Score!) == 100){
       if (_team1TotalScoreController.text != null && _team1TotalScoreController.text != ''){
         _team1TotalScoreController.text = (int.tryParse(_team1TotalScoreController.text.trim())! + team1Score).toString();
       }else{
@@ -126,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
       }else{
         _team2TotalScoreController.text = (100 - team1Score).toString();
       }
-    }else if (team2Score != null && team2Score! >= -25 && team2Score! <= 125 && team2Score % 5 == 0){
+    }else if (team2Score != null && team2Score! >= -25 && team2Score! <= 125 && team2Score % 5 == 0 && (team1Score! + team2Score) == 100){
       if (_team2TotalScoreController.text != null && _team2TotalScoreController.text != ''){
         _team2TotalScoreController.text = (int.tryParse(_team2TotalScoreController.text.trim())! + team2Score).toString();
       }else{
@@ -137,16 +141,14 @@ class _MyHomePageState extends State<MyHomePage> {
       }else{
         _team1TotalScoreController.text = (100 - team2Score).toString();
       }
-    }else if (team1Score == null || team2Score == null) {
-      _showSnackBar('Please enter valid integers for both teams.');
+    }else if (team1Score == null || team2Score == null || team1Score % 5 != 0 || team2Score % 5 != 0) {
+      _showSnackBar(AppLocalizations.of(context)!.pleaseEnterValidScore);
     } else if (team1Score < -25 || team1Score > 125) {
       _showSnackBar('Team 1 score must be between -25 and 125.');
     } else if (team2Score < -25 || team2Score > 125) {
       _showSnackBar('Team 2 score must be between -25 and 125.');
-    } else if (team1Score % 5 != 0 || team2Score % 5 != 0) {
-      _showSnackBar('Score must be multiple of 5.');
-    } else if ((team1Score + team2Score) != 100) {
-      _showSnackBar('The total of both scores must be 100.');
+    } else if ((team1Score + team2Score) <100 || (team1Score + team2Score)>100) {
+      _showSnackBar(AppLocalizations.of(context)!.totalScoreMustBe100);
     } else {
       if (_team1TotalScoreController.text != null && _team1TotalScoreController.text != '' && _team2TotalScoreController.text!= null && _team2TotalScoreController.text!= ''){
         _team1TotalScoreController.text = (int.tryParse(_team1TotalScoreController.text.trim())! + team1Score).toString();
@@ -179,6 +181,10 @@ class _MyHomePageState extends State<MyHomePage> {
       _team2Tichu2 = false;
       _team2GrandTichu1 = false;
       _team2GrandTichu2 = false;
+      _team1TichuOrGrandTichuWon1 = false;
+      _team1TichuOrGrandTichuWon2 = false;
+      _team2TichuOrGrandTichuWon1 = false;
+      _team2TichuOrGrandTichuWon2 = false;
     });
   }
 
@@ -236,8 +242,8 @@ class _MyHomePageState extends State<MyHomePage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('About'),
-            content: Text('App Version: $_appVersion'),
+            //title: Text(AppLocalizations.of(context)!.about),
+            content: Text(AppLocalizations.of(context)!.appVersion + '$_appVersion'),
             actions: <Widget>[
               TextButton(
                 child: Text('OK'),
@@ -249,15 +255,7 @@ class _MyHomePageState extends State<MyHomePage> {
           );
         },
       );
-      //_showSnackBar('Version: ' + Platform.version);
     }
-
-    // Set a timer to clear the text after 2 seconds.
-    // Timer(Duration(seconds: 1), () {
-    //   setState(() {
-    //     _selectedValue = '';
-    //   });
-    // });
   }
 
   @override
@@ -289,17 +287,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
             ListTile(
               leading: const Icon(Icons.new_label_rounded),
-              title: Text(AppLocalizations.of(context)!.New),
+              title: Text(AppLocalizations.of(context)!.newGame),
               onTap: () => _handleMenuSelection("New"),
             ),
             ListTile(
               leading: const Icon(Icons.save),
-              title: Text(AppLocalizations.of(context)!.Save),
+              title: Text(AppLocalizations.of(context)!.save),
               onTap: () => _handleMenuSelection("Save"),
             ),
             ListTile(
               leading: const Icon(Icons.help),
-              title: Text(AppLocalizations.of(context)!.Help),
+              title: Text(AppLocalizations.of(context)!.help),
               onTap: () => _handleMenuSelection("Help"),
             ),
             ListTile(
@@ -313,7 +311,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ListTile(
               leading: const Icon(Icons.info),
-              title: Text(AppLocalizations.of(context)!.About),
+              title: Text(AppLocalizations.of(context)!.about),
               onTap: () => _handleMenuSelection("About"),
             ),
           ],
@@ -401,25 +399,44 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 child: Stack(
                   children: <Widget>[
-                    // TextFields above checkboxes in the corners
+                    // Player 1
                     Positioned(
                       top: 10,
                       left: 10,
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
                             width: 120,
                             child: TextField(
-                              controller: _player1Controller, // Add controllers for each player
+                              controller: _player1Controller,
                               decoration: const InputDecoration(
-                                //border: OutlineInputBorder(),
                                 hintText: 'Player 1',
-                                icon: Icon(Icons.chair_outlined )
+                                icon: Icon(Icons.chair_outlined),
+                                contentPadding: EdgeInsets.only(bottom: 0), // No extra padding at the bottom
                               ),
                             ),
                           ),
+                          const SizedBox(height: 4), // Space between TextField and Row
                           Row(
                             children: [
+                              SizedBox(
+                                width: 20,
+                                child: Checkbox(
+                                  value: _team1TichuOrGrandTichuWon1,
+                                  checkColor: Colors.red,
+                                  onChanged: (bool? value) {
+                                    setState(() {
+                                      _team1TichuOrGrandTichuWon1 = value ?? false;
+                                      if (_team1TichuOrGrandTichuWon1) {
+                                        _team1TichuOrGrandTichuWon2 = false; // Uncheck the other checkbox
+                                      }
+                                    });
+                                  },
+                                ),
+                              ),
+                              const Text('W'),
+                              const SizedBox(width: 8),
                               SizedBox(
                                 width: 20,
                                 child: Checkbox(
@@ -428,6 +445,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                   onChanged: (bool? value) {
                                     setState(() {
                                       _team1Tichu1 = value ?? false;
+                                      if (_team1Tichu1) {
+                                        _team1GrandTichu1 = false; // Uncheck the other checkbox
+                                      }
                                     });
                                   },
                                 ),
@@ -442,6 +462,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                   onChanged: (bool? value) {
                                     setState(() {
                                       _team1GrandTichu1 = value ?? false;
+                                      if (_team1GrandTichu1) {
+                                        _team1Tichu1 = false; // Uncheck the other checkbox
+                                      }
                                     });
                                   },
                                 ),
@@ -452,24 +475,45 @@ class _MyHomePageState extends State<MyHomePage> {
                         ],
                       ),
                     ),
+                    // Player 2
                     Positioned(
                       top: 10,
                       right: 10,
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+
                           SizedBox(
                             width: 120,
                             child: TextField(
                               controller: _player2Controller,
                               decoration: const InputDecoration(
-                                //border: OutlineInputBorder(),
                                 hintText: 'Player 2',
-                                icon: Icon(Icons.chair)
+                                icon: Icon(Icons.chair),
+                                contentPadding: EdgeInsets.only(bottom: 0), // No extra padding at the bottom
                               ),
                             ),
                           ),
+                          const SizedBox(height: 4), // Space between TextField and Row
                           Row(
                             children: [
+                              SizedBox(
+                                width: 20,
+                                child: Checkbox(
+                                  value: _team2TichuOrGrandTichuWon1,
+                                  checkColor: Colors.blue,
+                                  onChanged: (bool? value) {
+                                    setState(() {
+                                      _team2TichuOrGrandTichuWon1 = value ?? false;
+                                      if (_team2TichuOrGrandTichuWon1) {
+                                        _team2TichuOrGrandTichuWon2 = false; // Uncheck the other checkbox
+                                      }
+                                    });
+                                  },
+                                ),
+                              ),
+                              const Text('W'),
+                              const SizedBox(width: 8),
                               SizedBox(
                                 width: 20,
                                 child: Checkbox(
@@ -477,7 +521,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                   checkColor: Colors.blue,
                                   onChanged: (bool? value) {
                                     setState(() {
-                                      _team2Tichu1 = value ?? true;
+                                      _team2Tichu1 = value ?? false;
+                                      if (_team2Tichu1) {
+                                        _team2GrandTichu1 = false; // Uncheck the other checkbox
+                                      }
                                     });
                                   },
                                 ),
@@ -491,7 +538,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                   checkColor: Colors.blue,
                                   onChanged: (bool? value) {
                                     setState(() {
-                                      _team2GrandTichu1 = value ?? true;
+                                      _team2GrandTichu1 = value ?? false;
+                                      if (_team2GrandTichu1) {
+                                        _team2Tichu1 = false; // Uncheck the other checkbox
+                                      }
                                     });
                                   },
                                 ),
@@ -502,81 +552,55 @@ class _MyHomePageState extends State<MyHomePage> {
                         ],
                       ),
                     ),
+                    // Player 3
                     Positioned(
                       bottom: 10,
                       left: 10,
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
                             width: 120,
                             child: TextField(
                               controller: _player3Controller,
                               decoration: const InputDecoration(
-                                //border: OutlineInputBorder(),
                                 hintText: 'Player 3',
-                                icon: Icon(Icons.chair)
+                                icon: Icon(Icons.chair),
+                                contentPadding: EdgeInsets.only(bottom: 0), // No extra padding at the bottom
                               ),
                             ),
                           ),
+                          const SizedBox(height: 4), // Space between TextField and Row
                           Row(
                             children: [
                               SizedBox(
                                 width: 20,
                                 child: Checkbox(
-                                  value: _team2Tichu2,
+                                  value: _team2TichuOrGrandTichuWon2,
                                   checkColor: Colors.black,
                                   onChanged: (bool? value) {
                                     setState(() {
-                                      _team2Tichu2 = value ?? false;
+                                      _team2TichuOrGrandTichuWon2 = value ?? false;
+                                      if (_team2TichuOrGrandTichuWon2) {
+                                        _team2TichuOrGrandTichuWon1 = false; // Uncheck the other checkbox
+                                      }
                                     });
                                   },
                                 ),
                               ),
-                              const Text('T'),
-                              const SizedBox(width: 10),
-                              SizedBox(
-                                width: 20,
-                                child: Checkbox(
-                                  value: _team2GrandTichu2,
-                                  checkColor: Colors.black,
-                                  onChanged: (bool? value) {
-                                    setState(() {
-                                      _team2GrandTichu2 = value ?? false;
-                                    });
-                                  },
-                                ),
-                              ),
-                              const Text('GT'),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 10,
-                      right: 10,
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            width: 120,
-                            child: TextField(
-                              controller: _player4Controller,
-                              decoration: const InputDecoration(
-                                //border: OutlineInputBorder(),
-                                hintText: 'Player 4',
-                                icon: Icon(Icons.chair_outlined )
-                              ),
-                            ),
-                          ),
-                          Row(
-                            children: [
+                              const Text('W'),
+                              const SizedBox(width: 8),
                               SizedBox(
                                 width: 20,
                                 child: Checkbox(
                                   value: _team1Tichu2,
+                                  checkColor: Colors.black,
                                   onChanged: (bool? value) {
                                     setState(() {
                                       _team1Tichu2 = value ?? false;
+                                      if (_team1Tichu2) {
+                                        _team1GrandTichu2 = false; // Uncheck the other checkbox
+                                      }
                                     });
                                   },
                                 ),
@@ -587,9 +611,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                 width: 20,
                                 child: Checkbox(
                                   value: _team1GrandTichu2,
+                                  checkColor: Colors.black,
                                   onChanged: (bool? value) {
                                     setState(() {
                                       _team1GrandTichu2 = value ?? false;
+                                      if (_team1GrandTichu2) {
+                                        _team1Tichu2 = false; // Uncheck the other checkbox
+                                      }
                                     });
                                   },
                                 ),
@@ -600,7 +628,80 @@ class _MyHomePageState extends State<MyHomePage> {
                         ],
                       ),
                     ),
-                    // Existing Center widget for team scores and button
+                    // Player 4
+                    Positioned(
+                      bottom: 10,
+                      right: 10,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: 120,
+                            child: TextField(
+                              controller: _player4Controller,
+                              decoration: const InputDecoration(
+                                hintText: 'Player 4',
+                                icon: Icon(Icons.chair_outlined),
+                                contentPadding: EdgeInsets.only(bottom: 0), // No extra padding at the bottom
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 4), // Space between TextField and Row
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 20,
+                                child: Checkbox(
+                                  value: _team1TichuOrGrandTichuWon2,
+                                  onChanged: (bool? value) {
+                                    setState(() {
+                                      _team1TichuOrGrandTichuWon2 = value ?? false;
+                                      if (_team1TichuOrGrandTichuWon2) {
+                                        _team1TichuOrGrandTichuWon1 = false; // Uncheck the other checkbox
+                                      }
+                                    });
+                                  },
+                                ),
+                              ),
+                              const Text('W'),
+                              const SizedBox(width: 8),
+                              SizedBox(
+                                width: 20,
+                                child: Checkbox(
+                                  value: _team2Tichu2,
+                                  onChanged: (bool? value) {
+                                    setState(() {
+                                      _team2Tichu2 = value ?? false;
+                                      if (_team2Tichu2) {
+                                        _team2GrandTichu2 = false; // Uncheck the other checkbox
+                                      }
+                                    });
+                                  },
+                                ),
+                              ),
+                              const Text('T'),
+                              const SizedBox(width: 10),
+                              SizedBox(
+                                width: 20,
+                                child: Checkbox(
+                                  value: _team2GrandTichu2,
+                                  onChanged: (bool? value) {
+                                    setState(() {
+                                      _team2GrandTichu2 = value ?? false;
+                                      if (_team2GrandTichu2) {
+                                        _team2Tichu2 = false; // Uncheck the other checkbox
+                                      }
+                                    });
+                                  },
+                                ),
+                              ),
+                              const Text('GT'),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    // Center widget for team scores and button
                     Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -618,6 +719,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                       keyboardType: TextInputType.numberWithOptions(signed: true, decimal: false),
                                       decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
+                                        fillColor: Colors.white,
+                                        filled: true,
                                       ),
                                       inputFormatters: [
                                         FilteringTextInputFormatter.allow(RegExp(r'^-?\d*$')),
@@ -637,6 +740,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                       keyboardType: TextInputType.numberWithOptions(signed: true, decimal: false),
                                       decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
+                                        fillColor: Colors.white,
+                                        filled: true,
                                       ),
                                       inputFormatters: [
                                         FilteringTextInputFormatter.allow(RegExp(r'^-?\d*$')),
@@ -657,6 +762,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ],
                 ),
+
               ),
               const SizedBox(height: 30),
             ],

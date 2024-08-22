@@ -22,18 +22,21 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "About": MessageLookupByLibrary.simpleMessage("About"),
-        "Help": MessageLookupByLibrary.simpleMessage("Help"),
         "Language": MessageLookupByLibrary.simpleMessage("Language"),
-        "New": MessageLookupByLibrary.simpleMessage("New"),
-        "Save": MessageLookupByLibrary.simpleMessage("Save"),
         "SubmitScore": MessageLookupByLibrary.simpleMessage("Submit Score"),
+        "about": MessageLookupByLibrary.simpleMessage("About"),
+        "appVersion": MessageLookupByLibrary.simpleMessage("App Version: "),
         "english": MessageLookupByLibrary.simpleMessage("English"),
         "greek": MessageLookupByLibrary.simpleMessage("Greek"),
+        "help": MessageLookupByLibrary.simpleMessage("Help"),
+        "newGame": MessageLookupByLibrary.simpleMessage("New"),
         "player1": MessageLookupByLibrary.simpleMessage("Player 1"),
         "player2": MessageLookupByLibrary.simpleMessage("Player 2"),
         "player3": MessageLookupByLibrary.simpleMessage("Player 3"),
         "player4": MessageLookupByLibrary.simpleMessage("Player 4"),
+        "pleaseEnterValidScore":
+            MessageLookupByLibrary.simpleMessage("Please enter valid score."),
+        "save": MessageLookupByLibrary.simpleMessage("Save"),
         "selectLanguage":
             MessageLookupByLibrary.simpleMessage("Select Language"),
         "submit": MessageLookupByLibrary.simpleMessage("Submit"),
@@ -41,6 +44,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "team1Score": MessageLookupByLibrary.simpleMessage("Team 1 Score"),
         "team2": MessageLookupByLibrary.simpleMessage("Team 2"),
         "team2Score": MessageLookupByLibrary.simpleMessage("Team 2 Score"),
-        "totalScore": MessageLookupByLibrary.simpleMessage("Total Score")
+        "totalScore": MessageLookupByLibrary.simpleMessage("Total Score"),
+        "totalScoreMustBe100": MessageLookupByLibrary.simpleMessage(
+            "The total of both scores must be 100.")
       };
 }

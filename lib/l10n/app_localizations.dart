@@ -25,37 +25,37 @@ class AppLocalizations {
     });
   }
 
-  String get New {
+  String get newGame {
     return Intl.message(
-      'New',
-      name: 'New',
+      'New Game',
+      name: 'newGame',
       desc: 'The label for the New menu item',
       locale: locale.toString(),
     );
   }
 
-  String get Save {
+  String get save {
     return Intl.message(
       'Save',
-      name: 'Save',
+      name: 'save',
       desc: 'The label for the Save menu item',
       locale: locale.toString(),
     );
   }
 
-  String get Help {
+  String get help {
     return Intl.message(
       'Help',
-      name: 'Help',
+      name: 'help',
       desc: 'The label for the Help menu item',
       locale: locale.toString(),
     );
   }
 
-  String get About {
+  String get about {
     return Intl.message(
       'About',
-      name: 'About',
+      name: 'about',
       desc: 'The label for the About menu item',
       locale: locale.toString(),
     );
@@ -183,6 +183,33 @@ class AppLocalizations {
       'Player 4',
       name: 'player4',
       desc: 'The label for the Player 4 Score menu item',
+      locale: locale.toString(),
+    );
+  }
+
+  String get pleaseEnterValidScore {
+    return Intl.message(
+      'Please enter valid score for both teams',
+      name: 'pleaseEnterValidScore',
+      desc: 'Please enter valid score for both teams',
+      locale: locale.toString(),
+    );
+  }
+
+  String get totalScoreMustBe100 {
+    return Intl.message(
+      'The total of both scores must be 100.',
+      name: 'totalScoreMustBe100',
+      desc: 'The total of both scores must be 100.',
+      locale: locale.toString(),
+    );
+  }
+
+  String get appVersion {
+    return Intl.message(
+      'App Version',
+      name: 'appVersion',
+      desc: 'App Version',
       locale: locale.toString(),
     );
   }
