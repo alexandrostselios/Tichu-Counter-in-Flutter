@@ -1,6 +1,6 @@
 # super_market_list
 
-A simple app for Super Market List creation
+Super Market List
 
 ## Getting Started
 
