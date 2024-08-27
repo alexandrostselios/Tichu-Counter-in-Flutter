@@ -78,8 +78,8 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _team2TichuOrGrandTichuWon1 = false;
   bool _team2TichuOrGrandTichuWon2 = false;
 
-  final TextEditingController _team1Controller = TextEditingController();
-  final TextEditingController _team2Controller = TextEditingController();
+  final TextEditingController _team1Controller = TextEditingController(); //For debug purposes
+  final TextEditingController _team2Controller = TextEditingController(); //For debug purposes
   final TextEditingController _team1TotalScoreController = TextEditingController();
   final TextEditingController _team2TotalScoreController = TextEditingController();
 
@@ -119,25 +119,147 @@ class _MyHomePageState extends State<MyHomePage> {
     final team1Score = int.tryParse(_team1Controller.text.trim());
     final team2Score = int.tryParse(_team2Controller.text.trim());
 
+    int team1TempScore = 0;
+    int team2TempScore = 0;
+
+    if (_team1TichuOrGrandTichuWon1 == true || _team1TichuOrGrandTichuWon2 == true){ //Vgike 1os apo tin omada 1
+      // Vgainei 1os o paiktis 1 tis omada 1
+      if(_team1TichuOrGrandTichuWon1 == true){
+        // Evgale o paiktis 1 to tichu kai o sumpaiktis tou den eipe tipota
+        if(_team1TichuOrGrandTichuWon1 == true && _team1Tichu1 == true && _team1Tichu2 == false && _team1GrandTichu2 == false){
+          team1TempScore = 100;
+          print("Tichu o Paiktis 1");
+        }else if(_team1TichuOrGrandTichuWon1 == true && _team1GrandTichu1 == true && _team1Tichu2 == false && _team1GrandTichu2 == false){
+          team1TempScore = 200;
+          print("Grand o Paiktis 1");
+        }else if(_team1TichuOrGrandTichuWon1 == true && _team1Tichu1 == true && _team1Tichu2 == true && _team1GrandTichu2 == false){
+          team1TempScore = 0;
+          print("Tichu o Paiktis 1 exase Tichu o Paiktis 4");
+        }else if(_team1TichuOrGrandTichuWon1 == true && _team1Tichu1 == true && _team1Tichu2 == false && _team1GrandTichu2 == true){
+          team1TempScore = 0;
+          print("Tichu o Paiktis 1 exase Grand o Paiktis 4");
+        }else if(_team1TichuOrGrandTichuWon1 == true && _team1GrandTichu1 == true && _team1Tichu2 == true && _team1GrandTichu2 == false){
+          team1TempScore = 100;
+          print("Grand o Paiktis 1 exase Tichu o Paiktis 4");
+        }else if(_team1TichuOrGrandTichuWon1 == true && _team1GrandTichu1 == true && _team1Tichu2 == false && _team1GrandTichu2 == true){
+          team1TempScore = 0;
+          print("Grand o Paiktis 1 exase Grand o Paiktis 4");
+        }
+        print(team1TempScore);
+      }else if (_team1TichuOrGrandTichuWon2 == true){
+        // Evgale o paiktis 1 to tichu kai o sumpaiktis tou den eipe tipota
+        if(_team1TichuOrGrandTichuWon2 == true && _team1Tichu2 == true && _team1Tichu1 == false && _team1GrandTichu1 == false){
+          team1TempScore = 100;
+          print("Tichu o Paiktis 4");
+        }else if(_team1TichuOrGrandTichuWon2 == true && _team1GrandTichu2 == true && _team1Tichu1 == false && _team1GrandTichu1 == false){
+          team1TempScore = 200;
+          print("Grand o Paiktis 4");
+        }else if(_team1TichuOrGrandTichuWon2 == true && _team1Tichu2 == true && _team1Tichu1 == true && _team1GrandTichu1 == false){
+          team1TempScore = 0;
+          print("Tichu o Paiktis 4 exase Tichu o Paiktis 1");
+        }else if(_team1TichuOrGrandTichuWon2 == true && _team1Tichu2 == true && _team1Tichu1 == false && _team1GrandTichu1 == true){
+          team1TempScore = 0;
+          print("Tichu o Paiktis 4 exase Grand o Paiktis 1");
+        }else if(_team1TichuOrGrandTichuWon2 == true && _team1GrandTichu2 == true && _team1Tichu1 == true && _team1GrandTichu1 == false){
+          team1TempScore = 100;
+          print("Grand o Paiktis 4 exase Tichu o Paiktis 1");
+        }else if(_team1TichuOrGrandTichuWon2 == true && _team1GrandTichu2 == true && _team1Tichu1 == false && _team1GrandTichu1 == true){
+          team1TempScore = 0;
+          print("Grand o Paiktis 4 exase Grand o Paiktis 1");
+        }
+        print(team1TempScore);
+      }
+      print("Team 1 lost: $team1TempScore");
+    }else  if(_team1TichuOrGrandTichuWon1 == false && _team1TichuOrGrandTichuWon2 == false && (_team1Tichu1 == true && _team1Tichu2 == true)){
+      team1TempScore = -200;
+      print("Team 1 lost: $team1TempScore");
+    }else if(_team1TichuOrGrandTichuWon1 == false && _team1TichuOrGrandTichuWon2 == false && ((_team1Tichu1 == true && _team1Tichu2 == false && _team1GrandTichu2 == false) || (_team1Tichu1 == false && _team1Tichu2 == true && _team1GrandTichu1 == false))){
+      team1TempScore = -100;
+      print("Team 1 lost: $team1TempScore");
+    }else if(_team1TichuOrGrandTichuWon1 == false && _team1TichuOrGrandTichuWon2 == false && (_team1GrandTichu1 == true && _team1GrandTichu2 == true)){
+      team1TempScore = -400;
+      print("Team 1 lost: $team1TempScore");
+    }else if(_team1TichuOrGrandTichuWon1 == false && _team1TichuOrGrandTichuWon2 == false && ((_team1Tichu1 == true && _team1Tichu2 == false && _team1GrandTichu2 == true) || (_team1Tichu1 == false && _team1Tichu2 == true && _team1GrandTichu1 == true))){
+      team1TempScore = -300;
+      print("Team 1 lost: $team1TempScore");
+    }
+    if (_team2TichuOrGrandTichuWon1 == true || _team2TichuOrGrandTichuWon2 == true){
+      if(_team2TichuOrGrandTichuWon1 == true){
+        if(_team2TichuOrGrandTichuWon1 == true && _team2Tichu1 == true && _team2Tichu2 == false && _team2GrandTichu2 == false){
+          team2TempScore = 100;
+          print("Tichu o Paiktis 2");
+        }else if(_team2TichuOrGrandTichuWon1 == true && _team2GrandTichu1 == true && _team1Tichu2 == false && _team2GrandTichu2 == false){
+          team2TempScore = 200;
+          print("Grand o Paiktis 2");
+        }else if(_team2TichuOrGrandTichuWon1 == true && _team2Tichu1 == true && _team1Tichu2 == true && _team2GrandTichu2 == false){
+          team2TempScore = 0;
+          print("Tichu o Paiktis 2 exase Tichu o Paiktis 3");
+        }else if(_team2TichuOrGrandTichuWon1 == true && _team2Tichu1 == true && _team1Tichu2 == false && _team2GrandTichu2 == true){
+          team2TempScore = 0;
+          print("Tichu o Paiktis 2 exase Grand o Paiktis 3");
+        }else if(_team2TichuOrGrandTichuWon1 == true && _team2GrandTichu1 == true && _team2Tichu2 == true && _team2GrandTichu2 == false){
+          team2TempScore = 100;
+          print("Grand o Paiktis 2 exase Tichu o Paiktis 3");
+        }else if(_team2TichuOrGrandTichuWon1 == true && _team2GrandTichu1 == true && _team2Tichu2 == false && _team2GrandTichu2 == true){
+          team2TempScore = 0;
+          print("Grand o Paiktis 2 exase Grand o Paiktis 3");
+        }
+        print(team1TempScore);
+      }else if (_team2TichuOrGrandTichuWon2 == true){
+        if(_team2TichuOrGrandTichuWon2 == true && _team2Tichu2 == true && _team2Tichu1 == false && _team2GrandTichu1 == false){
+          team2TempScore = 100;
+          print("Tichu o Paiktis 3");
+        }else if(_team2TichuOrGrandTichuWon2 == true && _team2GrandTichu2 == true && _team2Tichu1 == false && _team2GrandTichu1 == false){
+          team2TempScore = 200;
+          print("Grand o Paiktis 3");
+        }else if(_team2TichuOrGrandTichuWon2 == true && _team2Tichu2 == true && _team2Tichu1 == true && _team2GrandTichu1 == false){
+          team2TempScore = 0;
+          print("Tichu o Paiktis 3 exase Tichu o Paiktis 2");
+        }else if(_team2TichuOrGrandTichuWon2 == true && _team2Tichu2 == true && _team2Tichu1 == false && _team2GrandTichu1 == true){
+          team2TempScore = 0;
+          print("Tichu o Paiktis 3 exase Grand o Paiktis 2");
+        }else if(_team2TichuOrGrandTichuWon2 == true && _team2GrandTichu2 == true && _team2Tichu1 == true && _team2GrandTichu1 == false){
+          team2TempScore = 100;
+          print("Grand o Paiktis 3 exase Tichu o Paiktis 2");
+        }else if(_team2TichuOrGrandTichuWon2 == true && _team2GrandTichu2 == true && _team2Tichu1 == false && _team2GrandTichu1 == true){
+          team2TempScore = 0;
+          print("Grand o Paiktis 3 exase Grand o Paiktis 2");
+        }
+        print(team2TempScore);
+      }
+    }else if(_team2TichuOrGrandTichuWon1 == false && _team2TichuOrGrandTichuWon2 == false && (_team2Tichu1 == true && _team2Tichu2 == true)){
+      team2TempScore = -200;
+      print("Team 2 lost : $team2TempScore");
+    }else if(_team2TichuOrGrandTichuWon1 == false && _team2TichuOrGrandTichuWon2 == false && ((_team2Tichu1 == true && _team2Tichu2 == false && _team2GrandTichu2 == false) || (_team2Tichu1 == false && _team2Tichu2 == true && _team2GrandTichu1 == false))){
+      team2TempScore = -100;
+      print("Team 2 lost : $team2TempScore");
+    }else if(_team2TichuOrGrandTichuWon1 == false && _team2TichuOrGrandTichuWon2 == false && (_team2GrandTichu1 == true && _team2GrandTichu2 == true)){
+      team2TempScore = -400;
+      print("Team 2 lost : $team2TempScore");
+    }else if(_team2TichuOrGrandTichuWon1 == false && _team2TichuOrGrandTichuWon2 == false && ((_team2Tichu1 == true && _team2Tichu2 == false && _team2GrandTichu2 == true) || (_team2Tichu1 == false && _team2Tichu2 == true && _team2GrandTichu1 == true))){
+      team2TempScore = -300;
+      print("Team 2 lost : $team2TempScore");
+    }
+
     if (team1Score != null && team1Score! >= -25 && team1Score! <= 125 && team1Score % 5 == 0 && (team1Score + team2Score!) == 100){
       if (_team1TotalScoreController.text != null && _team1TotalScoreController.text != ''){
-        _team1TotalScoreController.text = (int.tryParse(_team1TotalScoreController.text.trim())! + team1Score).toString();
+        _team1TotalScoreController.text = (int.tryParse(_team1TotalScoreController.text.trim())! + team1Score + team1TempScore).toString();
       }else{
         _team1TotalScoreController.text = (team1Score).toString();
       }
       if (_team2TotalScoreController.text != null && _team2TotalScoreController.text != ''){
-        _team2TotalScoreController.text = (int.tryParse(_team2TotalScoreController.text.trim())! + 100 - team1Score).toString();
+        _team2TotalScoreController.text = (int.tryParse(_team2TotalScoreController.text.trim())! + 100 - team1Score + team1TempScore).toString();
       }else{
         _team2TotalScoreController.text = (100 - team1Score).toString();
       }
     }else if (team2Score != null && team2Score! >= -25 && team2Score! <= 125 && team2Score % 5 == 0 && (team1Score! + team2Score) == 100){
       if (_team2TotalScoreController.text != null && _team2TotalScoreController.text != ''){
-        _team2TotalScoreController.text = (int.tryParse(_team2TotalScoreController.text.trim())! + team2Score).toString();
+        _team2TotalScoreController.text = (int.tryParse(_team2TotalScoreController.text.trim())! + team2Score + team2TempScore).toString();
       }else{
         _team2TotalScoreController.text = (team2Score).toString();
       }
       if (_team1TotalScoreController.text != null && _team1TotalScoreController.text != ''){
-        _team1TotalScoreController.text = (int.tryParse(_team1TotalScoreController.text.trim())! + 100 - team2Score).toString();
+        _team1TotalScoreController.text = (int.tryParse(_team1TotalScoreController.text.trim())! + 100 - team2Score + team2TempScore).toString();
       }else{
         _team1TotalScoreController.text = (100 - team2Score).toString();
       }
@@ -151,13 +273,15 @@ class _MyHomePageState extends State<MyHomePage> {
       _showSnackBar(AppLocalizations.of(context)!.totalScoreMustBe100);
     } else {
       if (_team1TotalScoreController.text != null && _team1TotalScoreController.text != '' && _team2TotalScoreController.text!= null && _team2TotalScoreController.text!= ''){
-        _team1TotalScoreController.text = (int.tryParse(_team1TotalScoreController.text.trim())! + team1Score).toString();
-        _team2TotalScoreController.text = (int.tryParse(_team2TotalScoreController.text.trim())! + team2Score).toString();
+        _team1TotalScoreController.text = (int.tryParse(_team1TotalScoreController.text.trim())! + team1Score + team1TempScore).toString();
+        _team2TotalScoreController.text = (int.tryParse(_team2TotalScoreController.text.trim())! + team2Score + team2TempScore).toString();
       }else{
-        _team1TotalScoreController.text = (team1Score).toString();
-        _team2TotalScoreController.text = (team2Score).toString();
+        _team1TotalScoreController.text = (team1Score + team1TempScore).toString();
+        _team2TotalScoreController.text = (team2Score + team2TempScore).toString();
       }
     }
+    print(team1TempScore);
+    print(team2TempScore);
     _clearRoundScoreFields(false);
   }
 
@@ -170,6 +294,8 @@ class _MyHomePageState extends State<MyHomePage> {
       _player3Controller.text = 'Player 3';
       _player4Controller.text = 'Player 4';
     }
+    //_team1Controller.text='25';
+    //_team2Controller.text='75';
     _team1Controller.clear();
     _team2Controller.clear();
     setState(() {
@@ -430,6 +556,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                       _team1TichuOrGrandTichuWon1 = value ?? false;
                                       if (_team1TichuOrGrandTichuWon1) {
                                         _team1TichuOrGrandTichuWon2 = false; // Uncheck the other checkbox
+                                        _team2TichuOrGrandTichuWon1 = false;
+                                        _team2TichuOrGrandTichuWon2 = false;
                                       }
                                     });
                                   },
@@ -507,6 +635,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                       _team2TichuOrGrandTichuWon1 = value ?? false;
                                       if (_team2TichuOrGrandTichuWon1) {
                                         _team2TichuOrGrandTichuWon2 = false; // Uncheck the other checkbox
+                                        _team1TichuOrGrandTichuWon1 = false;
+                                        _team1TichuOrGrandTichuWon2 = false;
                                       }
                                     });
                                   },
@@ -583,6 +713,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                       _team2TichuOrGrandTichuWon2 = value ?? false;
                                       if (_team2TichuOrGrandTichuWon2) {
                                         _team2TichuOrGrandTichuWon1 = false; // Uncheck the other checkbox
+                                        _team1TichuOrGrandTichuWon1 = false;
+                                        _team1TichuOrGrandTichuWon2 = false;
                                       }
                                     });
                                   },
@@ -593,13 +725,13 @@ class _MyHomePageState extends State<MyHomePage> {
                               SizedBox(
                                 width: 20,
                                 child: Checkbox(
-                                  value: _team1Tichu2,
+                                  value: _team2Tichu2,
                                   checkColor: Colors.black,
                                   onChanged: (bool? value) {
                                     setState(() {
-                                      _team1Tichu2 = value ?? false;
-                                      if (_team1Tichu2) {
-                                        _team1GrandTichu2 = false; // Uncheck the other checkbox
+                                      _team2Tichu2 = value ?? false;
+                                      if (_team2Tichu2) {
+                                        _team2GrandTichu2 = false; // Uncheck the other checkbox
                                       }
                                     });
                                   },
@@ -610,13 +742,13 @@ class _MyHomePageState extends State<MyHomePage> {
                               SizedBox(
                                 width: 20,
                                 child: Checkbox(
-                                  value: _team1GrandTichu2,
+                                  value: _team2GrandTichu2,
                                   checkColor: Colors.black,
                                   onChanged: (bool? value) {
                                     setState(() {
-                                      _team1GrandTichu2 = value ?? false;
-                                      if (_team1GrandTichu2) {
-                                        _team1Tichu2 = false; // Uncheck the other checkbox
+                                      _team2GrandTichu2 = value ?? false;
+                                      if (_team2GrandTichu2) {
+                                        _team2Tichu2 = false; // Uncheck the other checkbox
                                       }
                                     });
                                   },
@@ -658,6 +790,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                       _team1TichuOrGrandTichuWon2 = value ?? false;
                                       if (_team1TichuOrGrandTichuWon2) {
                                         _team1TichuOrGrandTichuWon1 = false; // Uncheck the other checkbox
+                                        _team2TichuOrGrandTichuWon1 = false;
+                                        _team2TichuOrGrandTichuWon2 = false;
                                       }
                                     });
                                   },
@@ -668,11 +802,11 @@ class _MyHomePageState extends State<MyHomePage> {
                               SizedBox(
                                 width: 20,
                                 child: Checkbox(
-                                  value: _team2Tichu2,
+                                  value: _team1Tichu2,
                                   onChanged: (bool? value) {
                                     setState(() {
-                                      _team2Tichu2 = value ?? false;
-                                      if (_team2Tichu2) {
+                                      _team1Tichu2 = value ?? false;
+                                      if (_team1Tichu2) {
                                         _team2GrandTichu2 = false; // Uncheck the other checkbox
                                       }
                                     });
@@ -684,12 +818,12 @@ class _MyHomePageState extends State<MyHomePage> {
                               SizedBox(
                                 width: 20,
                                 child: Checkbox(
-                                  value: _team2GrandTichu2,
+                                  value: _team1GrandTichu2,
                                   onChanged: (bool? value) {
                                     setState(() {
-                                      _team2GrandTichu2 = value ?? false;
-                                      if (_team2GrandTichu2) {
-                                        _team2Tichu2 = false; // Uncheck the other checkbox
+                                      _team1GrandTichu2 = value ?? false;
+                                      if (_team1GrandTichu2) {
+                                        _team1Tichu2 = false; // Uncheck the other checkbox
                                       }
                                     });
                                   },
