@@ -1,6 +1,6 @@
 # super_market_list
 
-Super Market List
+A new Flutter project.
 
 ## Getting Started
 
